@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UstaProof v0.6 — Premium Platforma</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-vH9htzvWUV1Gk6lR9nNw3ghQ5mWx1f8zT+3fX2D1bHg4c9iB70mrNHE5EctSBtV06xFTz64rYF0rnnkkP6u7kg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        :root {
+            --up-bg: #0b1020;
+            --up-card: #121a35;
+            --up-ac: #5ddcff;
+            --up-glow: #00e5ff55;
+            --txt: #e5e7eb;
+            --btn-grad: linear-gradient(135deg, var(--up-ac), #4f46e5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Inter, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--up-bg);
+            color: var(--txt);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVBAR */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #020617aa;
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 12px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        header h1 {
+            font-weight: 800;
+            font-size: 26px;
+            background: linear-gradient(90deg, var(--up-ac), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header nav a {
+            margin-left: 25px;
+            font-weight: 600;
+            transition: color .3s;
+        }
+
+        header nav a:hover {
+            color: var(--up-ac)
+        }
+
+        /* HERO FULL SCREEN */
+        .hero {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100vh;
+            width: 100%;
+            background: linear-gradient(rgba(2, 6, 23, .8), rgba(2, 6, 23, .9)),
+                url("https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+            overflow: hidden;
+            background-attachment: fixed;
+            /* Bu rasm scroll qilganda harakat qilmasligini ta'minlaydi */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, #5ddcff22, transparent 70%);
+            animation: heroGlow 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            from {
+                opacity: .3;
+            }
+
+            to {
+                opacity: .8;
+            }
+        }
+
+        .hero h2 {
+            font-size: 64px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--up-ac), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            z-index: 2;
+            text-shadow: 0 0 20px #5ddcff55;
+            animation: heroText 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroText {
+            from {
+                text-shadow: 0 0 10px #5ddcff44;
+            }
+
+            to {
+                text-shadow: 0 0 35px #5ddcffaa;
+            }
+        }
+
+        .hero p {
+            font-size: 20px;
+            opacity: .8;
+            margin-bottom: 30px;
+            z-index: 2;
+        }
+
+        .hero button {
+            padding: 16px 30px;
+            font-weight: 700;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            background: var(--btn-grad);
+            cursor: pointer;
+            transition: .3s;
+            z-index: 2;
+        }
+
+        .hero button:hover {
+            filter: brightness(1.2)
+        }
+
+        /* SECTIONS */
+        section.up-wrap {
+            max-width: 1300px;
+            margin: auto;
+            padding: 120px 20px 60px;
+        }
+
+        .up-title {
+            text-align: center;
+            font-size: 50px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #5ddcff, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .up-sub {
+            text-align: center;
+            opacity: .7;
+            margin-bottom: 50px;
+            font-size: 18px;
+        }
+
+        /* GRID & CARD */
+        .up-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .up-card {
+            background: linear-gradient(145deg, #0f172a, #020617);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 0 transparent;
+            transition: transform 0.5s cubic-bezier(.4, 0, .2, 1), box-shadow 0.5s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .up-card::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(120deg, transparent, var(--up-ac), transparent);
+            opacity: .3;
+            transform: translateX(-100%);
+            transition: transform 0.8s;
+        }
+
+        .up-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .up-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 20px 50px #000, 0 0 25px var(--up-glow);
+        }
+
+        .up-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .up-card p {
+            opacity: .8;
+            font-size: 16px;
+        }
+
+        .up-card img {
+            width: 100%;
+            border-radius: 14px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .up-btn {
+            margin-top: 12px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            background: var(--btn-grad);
+            color: #000;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .up-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--up-ac);
+        }
+
+        /* HOW IT WORKS */
+        .how {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .how-box {
+            flex: 1 1 260px;
+            background: linear-gradient(145deg, #0f172a, #020617);
+            padding: 30px;
+            border-radius: 22px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px #000;
+            transition: transform .6s cubic-bezier(.34, 1.56, .64, 1), box-shadow .6s;
+        }
+
+        .how-box::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            background: linear-gradient(120deg, transparent, #5ddcff, transparent);
+            opacity: .25;
+            transform: translateX(-120%);
+            transition: 1s;
+        }
+
+        .how-box:hover::before {
+            transform: translateX(120%);
+        }
+
+        .how-box:hover {
+            transform: translateY(-20px) scale(1.08);
+            box-shadow: 0 30px 70px #000, 0 0 30px #5ddcff88;
+        }
+
+        .how-box i {
+            font-size: 42px;
+            margin-bottom: 15px;
+            color: #5ddcff;
+            animation: iconPulse 2.5s infinite;
+        }
+
+        .how-box img,
+        .how-box video {
+            width: 100%;
+            /* Containerning to‘liq kengligi */
+            height: 200px;
+            /* Kerak bo‘lsa kattaroq qilish mumkin */
+            object-fit: cover;
+            /* Rasm/video o‘lchami konteynerga moslashadi */
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .how-box video {
+            display: block;
+        }
+
+
+        @keyframes iconPulse {
+            0% {
+                transform: scale(1);
+                opacity: .7;
+            }
+
+            100% {
+                transform: scale(1.25);
+                opacity: 1;
+            }
+        }
+
+        /* MODAL */
+        .up-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            animation: fade .4s;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .up-modal-box {
+            background: linear-gradient(145deg, #0f172a, #020617);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 520px;
+            padding: 30px;
+            box-shadow: 0 20px 50px #000, 0 0 25px var(--up-glow);
+            position: relative;
+            animation: pop .5s cubic-bezier(.34, 1.56, .64, 1);
+            text-align: center;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(.6);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .up-modal-box h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--up-ac), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .up-modal-box p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .up-modal-box textarea,
+        .up-modal-box input[type="text"],
+        .up-modal-box input[type="tel"] {
+            width: 100%;
+            border-radius: 12px;
+            padding: 12px;
+            background: #121a35;
+            border: 1px solid #333;
+            color: #fff;
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        .up-modal-box input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #121a35;
+            color: #fff;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .up-modal-box input[type="file"]::file-selector-button {
+            border: none;
+            background: var(--btn-grad);
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .up-modal-box input[type="file"]::file-selector-button:hover {
+            filter: brightness(1.2);
+        }
+
+        /* CONTACT */
+        #contact form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 600px;
+            margin: auto;
+            background: #121a35;
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        #contact input,
+        #contact textarea {
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        #contact button {
+            background: var(--btn-grad);
+            border: none;
+            color: #000;
+            font-weight: 700;
+            padding: 14px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all .3s;
+        }
+
+        #contact button:hover {
+            filter: brightness(1.2);
+        }
+
+        /* SCROLL ANIMATION */
+        .hidden {
+            opacity: 0;
+            transform: translateY(50px) scale(.9);
+            transition: 1s;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>UstaProof</h1>
+        <nav>
+            <a href="#hero">Bosh sahifa</a>
+            <a href="#how">Qanday ishlaydi</a>
+            <a href="#ustalar">Ustalar</a>
+            <a href="#contact">Bog‘lanish</a>
+        </nav>
+    </header>
+
+    <section id="hero" class="hero">
+        <h2>Ishonch + Video Kafolat</h2>
+        <p>O‘zbekistonda birinchi premium usta platformasi</p>
+        <button onclick="scrollToSection('ustalar')">Usta topish</button>
+    </section>
+
+    <section id="how" class="up-wrap">
+        <div class="up-title">Qanday ishlaydi</div>
+        <div class="up-sub">3 bosqichda ishni ishonchli qilamiz</div>
+        <div class="how">
+            <!-- 1️⃣ Buyurtma (rasm) -->
+            <div class="how-box">
+                <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=400&q=80"
+                    alt="Buyurtma">
+                <h3>Buyurtma</h3>
+                <p>Mijoz buyurtma yaratadi va ustani tanlaydi</p>
+            </div>
+
+            <!-- 2️⃣ Video -->
+            <div class="how-box">
+                <img src="photo_2026-01-19_18-43-45.jpg" alt="Video" style="width:100%; height:auto;">
+                <h3>Video</h3>
+                <p>Ish boshlanishi, davomiyligi va yakuni video orqali</p>
+            </div>
+
+
+            <!-- 3️⃣ Kafolat (rasm) -->
+            <div class="how-box">
+                <img src="images.png" alt="Kafolat">
+                <h3>Kafolat</h3>
+                <p>Video asosida ishonch va kafolat beramiz</p>
+            </div>
+        </div>
+
+
+    </section>
+
+    <section id="ustalar" class="up-wrap">
+        <div class="up-title">Ustalar</div>
+        <div class="up-sub">Premium animatsiyali kartalar</div>
+        <div class="up-grid" id="upList"></div>
+    </section>
+
+    <section id="contact" class="up-wrap">
+        <div class="up-title">Bog‘lanish</div>
+        <form id="contactForm" onsubmit="sendContact(event)">
+            <input type="text" placeholder="Ism" required>
+            <input type="tel" placeholder="Telefon" required>
+            <textarea placeholder="Xabar" rows="4" required></textarea>
+            <button type="submit">Yuborish</button>
+        </form>
+    </section>
+
+    <div class="up-modal" id="upModal">
+        <div class="up-modal-box">
+            <h2 id="upName"></h2>
+            <p>Narx: <b id="upPrice"></b></p>
+            <p>Bo‘lib to‘lash (6 oy): <b id="upMonth"></b></p>
+            <textarea id="userComment" placeholder="Izoh yozing..." rows="3"></textarea>
+            <input type="text" id="userName" placeholder="Ismingiz">
+            <input type="tel" id="userPhone" placeholder="Telefon raqamingiz">
+            <p style="margin-top:10px; opacity:.7;">Rasm yuklash (ixtiyoriy)</p>
+            <input type="file" id="userImage" accept="image/*">
+            <p style="margin-top:10px; opacity:.7;">Video yuklash (ixtiyoriy)</p>
+            <input type="file" id="userVideo" accept="video/*">
+            <button class="up-btn" onclick="upConfirm()">Tasdiqlash</button>
+        </div>
+    </div>
+
+    <script>
+        const upData = [
+            { name: "Akmal", lname: "Aliyev", img: "https://picsum.photos/400/300?1" },
+            { name: "Rustam", lname: "Karimov", img: "https://picsum.photos/400/300?2" },
+            { name: "Bekzod", lname: "Saidov", img: "https://picsum.photos/400/300?3" },
+            { name: "Islom", lname: "Toshpulatov", img: "https://picsum.photos/400/300?4" },
+            { name: "Jasur", lname: "Rahimov", img: "https://picsum.photos/400/300?5" },
+            { name: "Oybek", lname: "Shamsiev", img: "https://picsum.photos/400/300?6" },
+            { name: "Doston", lname: "Yusupov", img: "https://picsum.photos/400/300?7" },
+            { name: "Sardor", lname: "Islomov", img: "https://picsum.photos/400/300?8" },
+            { name: "Aziz", lname: "Husanov", img: "https://picsum.photos/400/300?9" },
+            { name: "Shahzod", lname: "Mamatov", img: "https://picsum.photos/400/300?10" },
+            { name: "Jahon", lname: "Tursunov", img: "https://picsum.photos/400/300?11" },
+            { name: "Malik", lname: "Qodirov", img: "https://picsum.photos/400/300?12" },
+            { name: "Ibrohim", lname: "Mirzayev", img: "https://picsum.photos/400/300?13" },
+            { name: "Sardor", lname: "Abdullayev", img: "https://picsum.photos/400/300?14" },
+            { name: "Bekzod", lname: "Jurayev", img: "https://picsum.photos/400/300?15" },
+            { name: "Shohrux", lname: "Samatov", img: "https://picsum.photos/400/300?16" },
+            { name: "Otabek", lname: "Karimov", img: "https://picsum.photos/400/300?17" },
+            { name: "Jasur", lname: "Nazarov", img: "https://picsum.photos/400/300?18" },
+            { name: "Kamron", lname: "Rashidov", img: "https://picsum.photos/400/300?19" },
+            { name: "Farhod", lname: "Rahimov", img: "https://picsum.photos/400/300?20" }
+        ];
+
+        const list = document.getElementById("upList");
+        upData.forEach((u, i) => {
+            list.innerHTML += `
+ <div class="up-card hidden" onclick="upOpen(${i})">
+   <img src="${u.img}">   <h3>${u.name} ${u.lname}</h3>
+   <button class="up-btn">Buyurtma</button>
+ </div>`;
+        });
+
+        // Scroll animatsiya uchun observer
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) e.target.classList.add("show");
+            });
+        });
+
+        document.querySelectorAll(".how-box, .up-card").forEach(el => {
+            observer.observe(el);
+        });
+
+        // Modal ochish
+        function upOpen(i) {
+            const u = upData[i];
+            document.getElementById("upName").innerText = u.name + " " + u.lname;
+            document.getElementById("userComment").value = "";
+            document.getElementById("userName").value = "";
+            document.getElementById("userPhone").value = "";
+            document.getElementById("upModal").style.display = "flex";
+        }
+
+        function upClose() {
+            document.getElementById("upModal").style.display = "none";
+        }
+
+        document.getElementById("upModal").addEventListener("click", e => {
+            if (e.target.id === "upModal") upClose();
+        });
+
+        function upConfirm() {
+            const name = document.getElementById("userName").value.trim();
+            const phone = document.getElementById("userPhone").value.trim();
+            const comment = document.getElementById("userComment").value.trim();
+            const image = document.getElementById("userImage").files[0];
+            const video = document.getElementById("userVideo").files[0];
+
+            if (!phone) {
+                alert("Telefon raqam majburiy!");
+                return;
+            }
+
+            const telegramToken = "8267737778:AAGtH70q-8_JB7ZYaNmzgl_Mukh4h0NNxXQ";
+            const chatID = "6816365635";
+
+            const text = `📦 Yangi buyurtma:
+Usta: ${document.getElementById("upName").innerText}
+Telefon: ${phone}
+Ism: ${name || "Kiritilmadi"}
+Izoh: ${comment || "Izoh yo‘q"}`;
+
+            // 1️⃣ Matn yuborish
+            fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: chatID, text })
+            });
+
+            // 2️⃣ Rasm bo‘lsa yuboriladi
+            if (image) {
+                const imgData = new FormData();
+                imgData.append("chat_id", chatID);
+                imgData.append("photo", image);
+
+                fetch(`https://api.telegram.org/bot${telegramToken}/sendPhoto`, {
+                    method: "POST",
+                    body: imgData
+                });
+            }
+
+            // 3️⃣ Video bo‘lsa yuboriladi
+            if (video) {
+                const vidData = new FormData();
+                vidData.append("chat_id", chatID);
+                vidData.append("video", video);
+
+                fetch(`https://api.telegram.org/bot${telegramToken}/sendVideo`, {
+                    method: "POST",
+                    body: vidData
+                });
+            }
+
+            alert("Buyurtma yuborildi!");
+            upClose();
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+        }
+
+        function sendContact(e) {
+            e.preventDefault();
+
+            const name = document.querySelector("#contact input[type='text']").value.trim();
+            const phone = document.querySelector("#contact input[type='tel']").value.trim();
+            const msg = document.querySelector("#contact textarea").value.trim();
+
+            if (!phone) {
+                alert("Telefon raqam majburiy!");
+                return;
+            }
+
+            const telegramToken = "8267737778:AAGtH70q-8_JB7ZYaNmzgl_Mukh4h0NNxXQ";
+            const chatID = "6816365635";
+
+            const text = `📩 Yangi bog‘lanish:
+Ism: ${name || "Kiritilmadi"}
+Telefon: ${phone}
+Xabar: ${msg || "Xabar yo‘q"}`;
+
+            fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ chat_id: chatID, text: text })
+            })
+                .then(r => r.json())
+                .then(d => {
+                    if (!d.ok) {
+                        alert("Telegramga yuborilmadi!");
+                        return;
+                    }
+                    alert("Xabaringiz yuborildi!");
+                    document.getElementById("contactForm").reset();
+                });
+        }
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(() => console.log('Service Worker registered'));
+        }
+    </script>
+</body>
+
+</html>
